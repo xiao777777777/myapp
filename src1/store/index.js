@@ -5,6 +5,7 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
+
     tabList: [
       {
         title: "首页",
@@ -13,7 +14,7 @@ export default new Vuex.Store({
     ]
   },
   mutations: {
-    getRoute:({tabList},payload)=>{
+    setTabList:({tabList},payload)=>{
       let flag=false
       tabList.forEach(item=>{
         if(item.title==payload.title){
@@ -25,15 +26,13 @@ export default new Vuex.Store({
          }
     
     },
-
-    deltab:({tabList},index)=>{
+    delTabItem:({tabList},index)=>{
       tabList.splice(index,1)
-    }
+   },
 
-    
+
   },
-
-
+  
   actions: {
   },
   modules: {

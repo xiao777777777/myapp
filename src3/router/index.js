@@ -9,7 +9,6 @@ const routes = [
     path: '/',
     redirect: '/home'
   },
-
   ...asyncRoutes,
   {
     path: '/login',
@@ -19,30 +18,40 @@ const routes = [
     },
     component: () => import('../views/login')
   },
+  {
+    path: '*',
+    name: '404',
+    meta: {
+      title: '404页面'
+    },
+    component: () => import('../views/404')
+  }
 ]
 
-//避免重复点击时的报错
 const originalPush = VueRouter.prototype.push
 VueRouter.prototype.push = function push(location) {
   return originalPush.call(this, location).catch(err => err)
 }
-
 const router = new VueRouter({
   routes
 })
 
+
+
 router.beforeEach((to, from, next) => {
- let token =sessionStorage.getItem("token");
- 
-  if(to.fullPath=="/login"){
+  document.title = to.meta.title
+  // url:"/"
+  let token = sessionStorage.getItem("token")
+  if (to.fullPath === "/login") {
     next()
-  }else{
-    if(token){
+  } else {
+    if (token) {
       next()
-    }else{
-          next("/login")
+    } else {
+      next("/login")
     }
   }
+
 })
 
 export default router
